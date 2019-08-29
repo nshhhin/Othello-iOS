@@ -80,12 +80,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         case .black:
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
-                turnStatus = currentTurn(checkPutPlace(.white))
+                turnStatus = nextTurnStatus(.white)
             }
         case .white:
             if isPuttable(.white, x: x, y: y) {
                 put(.white, x: x, y: y)
-                turnStatus = currentTurn(checkPutPlace(.black))
+                turnStatus = nextTurnStatus(.black)
             }
         }
         filedCollectionV.reloadData()
@@ -138,6 +138,15 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return .black
         case .none:
             return .none
+        }
+    }
+    
+    func isNot(_ status: TurnStatus) -> TurnStatus {
+        switch status {
+        case .black:
+            return .white
+        case .white:
+            return .black
         }
     }
     
@@ -223,7 +232,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func checkPutPlace(_ status: PanelStatus) -> PanelStatus {
+    func nextTurnStatus(_ status: PanelStatus) -> TurnStatus {
         var existPutPlace = false
         for x in 0..<fieldWidth {
             for y in 0..<fieldWidth {
@@ -231,9 +240,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             }
         }
         if existPutPlace {
-            return status
+            return currentTurn(status)
         }
-        return isNot(status)
+        return isNot(currentTurn(status))
     }
+    
+    
 }
 
