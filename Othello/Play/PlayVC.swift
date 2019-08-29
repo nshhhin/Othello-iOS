@@ -179,6 +179,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func reverseCount(x: Int, y: Int, dx: Int, dy: Int, count: Int) -> Int {
+        let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
+        if isOverField {
+            return 0
+        }
+        
         if arrayPanels[x+dx][y+dy] == currentPanel(turnStatus) {
             return count
         } else if arrayPanels[x+dx][y+dy] == .none {
