@@ -1,4 +1,4 @@
 # Othello-iOS
 エクササイズがてらSwiftでオセロをつくってみた
 
-<img src="https://gyazo.com/e73ec7cb5321543b980b5f4d97d72f76.gif" width=200px height=auto>
+<img src="https://gyazo.com/9f0ffda16ba36e560d272d94eb6585e2.gif" width=200px height=auto>
