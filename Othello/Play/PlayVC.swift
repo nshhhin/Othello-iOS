@@ -65,15 +65,18 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let x = Int(indexPath.row/fieldWidth)
+        let y = indexPath.row%fieldWidth
+        
         switch turnStatus {
         case .black:
-            if isPuttable(.black, indexPath) {
-                put(.black, x: Int(indexPath.row/fieldWidth), y: indexPath.row%fieldWidth)
+            if isPuttable(.black, x: x, y: y) {
+                put(.black, x: x, y: y)
                 turnStatus = .white
             }
         case .white:
-            if isPuttable(.white, indexPath) {
-                put(.white, x: Int(indexPath.row/fieldWidth), y: indexPath.row%fieldWidth)
+            if isPuttable(.white, x: x, y: y) {
+                put(.white, x: x, y: y)
                 turnStatus = .black
             }
         }
@@ -112,17 +115,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func isPuttable(_ putPanelStatus:PanelStatus, _ indexPath: IndexPath) -> Bool {
-        
-        
-        let x = Int(indexPath.row/fieldWidth)
-        let y = (indexPath.row%fieldWidth)
-        
+    func isPuttable(_ putPanelStatus:PanelStatus, x: Int, y: Int) -> Bool {
+    
         // もう置いてあったら置けない
-        if arrayPanels[Int(indexPath.row/fieldWidth)][(indexPath.row%fieldWidth)] != .none {
+        if arrayPanels[x][y] != .none {
             return false
         }
-       
         // 周辺の状況をしらべる
         var isRoundExist = false
         for dx in -1..<2 {
@@ -134,12 +132,6 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             if isOverField {
                 continue
             }
-            
-            
-            
-            print( dy, dx )
-            let x = Int(indexPath.row/fieldWidth)
-            let y = (indexPath.row%fieldWidth)
             if arrayPanels[x+dx][y+dy] == isNot(putPanelStatus) {
                 isRoundExist = searchNeighbor(x: x, y: y, dx: dx, dy: dy) || isRoundExist
             }
