@@ -34,12 +34,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
         
         arrayPanels[3][3] = .white
-        arrayPanels[4][3] = .black
         arrayPanels[3][4] = .black
+        arrayPanels[4][3] = .black
         arrayPanels[4][4] = .white
         
         updateUI()
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
