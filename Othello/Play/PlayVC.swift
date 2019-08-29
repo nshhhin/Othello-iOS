@@ -196,6 +196,5 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return reverseCount(x: x+dx, y: y+dy, dx: dx, dy: dy, count: count+1)
         }
     }
-    
 }
 
