@@ -41,6 +41,10 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         updateUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return fieldWidth * fieldWidth
     }
