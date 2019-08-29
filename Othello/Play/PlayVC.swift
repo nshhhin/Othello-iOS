@@ -35,7 +35,6 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         arrayPanels[4][3] = .black
         arrayPanels[3][4] = .black
         arrayPanels[4][4] = .white
-        print("===============")
         
     }
     
