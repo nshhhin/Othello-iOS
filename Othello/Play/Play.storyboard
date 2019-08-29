@@ -42,17 +42,39 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-RU-s8v">
+                                <rect key="frame" x="20" y="116" width="374" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在のターン" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ac7-5K-ZfP">
+                                        <rect key="frame" x="135" y="39.5" width="104" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Ac7-5K-ZfP" firstAttribute="centerX" secondItem="VY8-RU-s8v" secondAttribute="centerX" id="9vZ-9f-64F"/>
+                                    <constraint firstAttribute="height" constant="100" id="U32-Dw-Eg3"/>
+                                    <constraint firstItem="Ac7-5K-ZfP" firstAttribute="centerY" secondItem="VY8-RU-s8v" secondAttribute="centerY" id="rVr-hX-TS5"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="centerY" secondItem="hoL-fI-9XH" secondAttribute="centerY" id="Jph-18-JTX"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="centerX" secondItem="hoL-fI-9XH" secondAttribute="centerX" id="SPn-0Y-REK"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="trailing" secondItem="Zfr-77-pcc" secondAttribute="trailing" id="UYY-b4-y9a"/>
+                            <constraint firstItem="Zfr-77-pcc" firstAttribute="trailing" secondItem="VY8-RU-s8v" secondAttribute="trailing" constant="20" id="W6d-5J-8VE"/>
+                            <constraint firstItem="VY8-RU-s8v" firstAttribute="leading" secondItem="Zfr-77-pcc" secondAttribute="leading" constant="20" id="h19-AX-l8C"/>
+                            <constraint firstItem="tJj-3W-3IG" firstAttribute="top" secondItem="VY8-RU-s8v" secondAttribute="bottom" constant="25" id="nLq-8I-Vr1"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="leading" secondItem="hoL-fI-9XH" secondAttribute="leading" id="nSY-1w-WWU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zfr-77-pcc"/>
                     </view>
                     <connections>
+                        <outlet property="displayTurnLabel" destination="Ac7-5K-ZfP" id="74u-Ku-u23"/>
+                        <outlet property="displayTurnV" destination="VY8-RU-s8v" id="fhJ-rw-1zh"/>
                         <outlet property="filedCollectionV" destination="tJj-3W-3IG" id="j0Z-pX-Z6G"/>
                     </connections>
                 </viewController>

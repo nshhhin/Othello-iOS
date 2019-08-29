@@ -8,6 +8,8 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     let fieldWidth = 8
     let margin = 1.0
     
+    @IBOutlet weak var displayTurnV: UIView!
+    @IBOutlet weak var displayTurnLabel: UILabel!
     
     @IBOutlet weak var filedCollectionV: UICollectionView! {
         didSet {
@@ -35,6 +37,8 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         arrayPanels[4][3] = .black
         arrayPanels[3][4] = .black
         arrayPanels[4][4] = .white
+        
+        updateUI()
         
     }
     
@@ -70,8 +74,19 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             arrayPanels[Int(indexPath.row/fieldWidth)][indexPath.row%fieldWidth] = .white
             turnStatus = .black
         }
-        
         filedCollectionV.reloadData()
+        updateUI()
+    }
+    
+    func updateUI(){
+        switch turnStatus {
+        case .black:
+            displayTurnV.backgroundColor = .black
+            displayTurnLabel.textColor = .white
+        case .white:
+            displayTurnV.backgroundColor = .white
+            displayTurnLabel.textColor = .black
+        }
     }
     
 }
