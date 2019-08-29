@@ -114,6 +114,10 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func isPuttable(_ putPanelStatus:PanelStatus, _ indexPath: IndexPath) -> Bool {
         
+        
+        let x = Int(indexPath.row/fieldWidth)
+        let y = (indexPath.row%fieldWidth)
+        
         // もう置いてあったら置けない
         if arrayPanels[Int(indexPath.row/fieldWidth)][(indexPath.row%fieldWidth)] != .none {
             return false
@@ -126,6 +130,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             if dx == 0 && dy == 0 {
                continue
             }
+            let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
+            if isOverField {
+                continue
+            }
+            
             
             print( dy, dx )
             let x = Int(indexPath.row/fieldWidth)
@@ -159,6 +168,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             if dx == 0 && dy == 0 {
                 continue
             }
+            let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
+            if isOverField {
+                continue
+            }
+            
             // 各方向が何個ひっくり返せるかを数える
             let t = reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
             for i in 0..<t+1 {
