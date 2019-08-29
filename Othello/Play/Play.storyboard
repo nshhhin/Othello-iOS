@@ -42,23 +42,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-RU-s8v">
-                                <rect key="frame" x="20" y="116" width="374" height="100"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在のターン" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ac7-5K-ZfP">
-                                        <rect key="frame" x="135" y="39.5" width="104" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="Ac7-5K-ZfP" firstAttribute="centerX" secondItem="VY8-RU-s8v" secondAttribute="centerX" id="9vZ-9f-64F"/>
-                                    <constraint firstAttribute="height" constant="100" id="U32-Dw-Eg3"/>
-                                    <constraint firstItem="Ac7-5K-ZfP" firstAttribute="centerY" secondItem="VY8-RU-s8v" secondAttribute="centerY" id="rVr-hX-TS5"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRQ-cX-MMO">
                                 <rect key="frame" x="20" y="675" width="374" height="50"/>
                                 <subviews>
@@ -158,21 +141,18 @@
                             <constraint firstItem="Xp5-CB-NcA" firstAttribute="top" secondItem="rRQ-cX-MMO" secondAttribute="bottom" constant="20" id="RRN-cf-UGp"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="centerX" secondItem="hoL-fI-9XH" secondAttribute="centerX" id="SPn-0Y-REK"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="trailing" secondItem="Zfr-77-pcc" secondAttribute="trailing" id="UYY-b4-y9a"/>
-                            <constraint firstItem="Zfr-77-pcc" firstAttribute="trailing" secondItem="VY8-RU-s8v" secondAttribute="trailing" constant="20" id="W6d-5J-8VE"/>
                             <constraint firstItem="rRQ-cX-MMO" firstAttribute="leading" secondItem="Zfr-77-pcc" secondAttribute="leading" constant="20" id="fyG-7c-4SB"/>
-                            <constraint firstItem="VY8-RU-s8v" firstAttribute="leading" secondItem="Zfr-77-pcc" secondAttribute="leading" constant="20" id="h19-AX-l8C"/>
                             <constraint firstItem="Zfr-77-pcc" firstAttribute="trailing" secondItem="Xp5-CB-NcA" secondAttribute="trailing" constant="20" id="jnU-Zs-8bi"/>
-                            <constraint firstItem="tJj-3W-3IG" firstAttribute="top" secondItem="VY8-RU-s8v" secondAttribute="bottom" constant="25" id="nLq-8I-Vr1"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="leading" secondItem="hoL-fI-9XH" secondAttribute="leading" id="nSY-1w-WWU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zfr-77-pcc"/>
                     </view>
                     <connections>
                         <outlet property="blackCountLabel" destination="ykk-Y5-z2X" id="vJY-IF-afe"/>
-                        <outlet property="displayTurnLabel" destination="Ac7-5K-ZfP" id="74u-Ku-u23"/>
-                        <outlet property="displayTurnV" destination="VY8-RU-s8v" id="fhJ-rw-1zh"/>
+                        <outlet property="blackV" destination="rRQ-cX-MMO" id="DZ1-nJ-DMn"/>
                         <outlet property="filedCollectionV" destination="tJj-3W-3IG" id="j0Z-pX-Z6G"/>
                         <outlet property="whiteCountLabel" destination="CKK-UR-bU9" id="SBP-4M-oty"/>
+                        <outlet property="whiteV" destination="Xp5-CB-NcA" id="jTs-z7-BhD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCf-9v-B1c" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,12 +10,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     let fieldWidth = 8
     let margin = 1.0
     
-    @IBOutlet weak var displayTurnV: UIView!
-    @IBOutlet weak var displayTurnLabel: UILabel!
-    
     @IBOutlet weak var blackCountLabel: UILabel!
     @IBOutlet weak var whiteCountLabel: UILabel!
     
+    @IBOutlet weak var blackV: UIView!
+    @IBOutlet weak var whiteV: UIView!
     
     @IBOutlet weak var filedCollectionV: UICollectionView! {
         didSet {
@@ -96,11 +95,19 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func updateUI(){
         switch turnStatus {
         case .black:
-            displayTurnV.backgroundColor = .black
-            displayTurnLabel.textColor = .white
+            blackV.alpha = 1
+            UIView.animate(withDuration: 0.5, delay: 0.1, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
+                self.blackV.alpha = 0.3
+            })
+            whiteV.alpha = 1
+            whiteV.layer.removeAllAnimations()
         case .white:
-            displayTurnV.backgroundColor = .white
-            displayTurnLabel.textColor = .black
+            whiteV.alpha = 1
+            UIView.animate(withDuration: 0.5, delay: 0.1, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
+                self.whiteV.alpha = 0.3
+            })
+            blackV.layer.removeAllAnimations()
+            blackV.alpha = 1
         }
         
         var blackCount = 0
@@ -121,21 +128,6 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
         blackCountLabel.text = String(blackCount)
         whiteCountLabel.text = String(whiteCount)
-       
-        
-//        switch player1 {
-//        case .player:
-//            displayTurnLabel.text = "Player1のターン"
-//        case .cpu:
-//            displayTurnLabel.text = "CPU1のターン"
-//        }
-//
-//        switch player2 {
-//        case .player:
-//            displayTurnLabel.text = "Player2のターン"
-//        case .cpu:
-//            displayTurnLabel.text = "CPU2のターン"
-//        }
     }
     
     func isNot(_ status: PanelStatus) -> PanelStatus {
