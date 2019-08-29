@@ -5,11 +5,17 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     var arrayPanels: [[PanelStatus]] = []
     var turnStatus: TurnStatus = .black
+    var player1: PlayerStatus = .player
+    var player2: PlayerStatus = .player
     let fieldWidth = 8
     let margin = 1.0
     
     @IBOutlet weak var displayTurnV: UIView!
     @IBOutlet weak var displayTurnLabel: UILabel!
+    
+    @IBOutlet weak var blackCountLabel: UILabel!
+    @IBOutlet weak var whiteCountLabel: UILabel!
+    
     
     @IBOutlet weak var filedCollectionV: UICollectionView! {
         didSet {
@@ -96,6 +102,20 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             displayTurnV.backgroundColor = .white
             displayTurnLabel.textColor = .black
         }
+        
+//        switch player1 {
+//        case .player:
+//            displayTurnLabel.text = "Player1のターン"
+//        case .cpu:
+//            displayTurnLabel.text = "CPU1のターン"
+//        }
+//
+//        switch player2 {
+//        case .player:
+//            displayTurnLabel.text = "Player2のターン"
+//        case .cpu:
+//            displayTurnLabel.text = "CPU2のターン"
+//        }
     }
     
     func isNot(_ status: PanelStatus) -> PanelStatus {
@@ -125,37 +145,21 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return false
         }
         // 周辺の状況をしらべる
-        var isRoundExist = false
+        var revSumCount = 0
         for dx in -1..<2 {
         for dy in -1..<2 {
             if dx == 0 && dy == 0 {
                continue
             }
-            let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
-            if isOverField {
-                continue
-            }
-            if arrayPanels[x+dx][y+dy] == isNot(putPanelStatus) {
-                isRoundExist = searchNeighbor(x: x, y: y, dx: dx, dy: dy) || isRoundExist
-            }
+            revSumCount += reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
         }
-        }
-        return isRoundExist
-    }
-    
-    func searchNeighbor(x: Int, y:Int, dx: Int, dy: Int) -> Bool {
-        let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
-        if isOverField {
-            return false
         }
         
-        if arrayPanels[x+dx][y+dy] == currentPanel(turnStatus) {
+        if revSumCount > 0 {
             return true
-        } else if arrayPanels[x+dx][y+dy] == .none {
-            return false
-        } else {
-            return searchNeighbor(x: x+dx, y: y+dy, dx: dx, dy: dy)
         }
+        
+        return false
     }
     
     func put(_ putPanelStatus:PanelStatus, x: Int, y: Int){
@@ -182,6 +186,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }}
     }
     
+    // 何個返せるかを取得
     func reverseCount(x: Int, y: Int, dx: Int, dy: Int, count: Int) -> Int {
         let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
         if isOverField {

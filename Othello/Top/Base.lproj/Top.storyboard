@@ -51,7 +51,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="1Zp-9E-4Uj" kind="push" id="fPH-vA-OIf"/>
+                                    <segue destination="1Zp-9E-4Uj" kind="push" identifier="toPlaySeg" id="fPH-vA-OIf"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iiR-yg-kjM">
@@ -105,6 +105,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="yUp-Hp-FOA"/>
+                    <connections>
+                        <outlet property="switch1" destination="iiR-yg-kjM" id="x3Y-v5-0bs"/>
+                        <outlet property="switch2" destination="7n1-Fm-t90" id="hEk-D7-aHx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

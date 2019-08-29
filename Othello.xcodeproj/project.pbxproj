@@ -20,6 +20,7 @@
 		F32FCF102317610D00DC4FF6 /* FieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32FCF0F2317610D00DC4FF6 /* FieldCell.swift */; };
 		F32FCF12231766C800DC4FF6 /* PanelStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32FCF11231766C800DC4FF6 /* PanelStatus.swift */; };
 		F32FCF1623176F1000DC4FF6 /* TurnStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32FCF1523176F1000DC4FF6 /* TurnStatus.swift */; };
+		F3CAE8D92317A27500DA730D /* PlayerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CAE8D82317A27500DA730D /* PlayerStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		F32FCF0F2317610D00DC4FF6 /* FieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldCell.swift; sourceTree = "<group>"; };
 		F32FCF11231766C800DC4FF6 /* PanelStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelStatus.swift; sourceTree = "<group>"; };
 		F32FCF1523176F1000DC4FF6 /* TurnStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnStatus.swift; sourceTree = "<group>"; };
+		F3CAE8D82317A27500DA730D /* PlayerStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				F32FCF0F2317610D00DC4FF6 /* FieldCell.swift */,
 				F32FCF1523176F1000DC4FF6 /* TurnStatus.swift */,
 				F32FCF11231766C800DC4FF6 /* PanelStatus.swift */,
+				F3CAE8D82317A27500DA730D /* PlayerStatus.swift */,
 				F32FCF0D2317607B00DC4FF6 /* FieldCell.xib */,
 				F32FCF082316F54C00DC4FF6 /* Play.storyboard */,
 			);
@@ -292,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3CAE8D92317A27500DA730D /* PlayerStatus.swift in Sources */,
 				F32FCEDC2316F25200DC4FF6 /* TopVC.swift in Sources */,
 				F32FCF102317610D00DC4FF6 /* FieldCell.swift in Sources */,
 				F32FCEDA2316F25200DC4FF6 /* AppDelegate.swift in Sources */,
