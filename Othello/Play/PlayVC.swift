@@ -60,7 +60,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let y = (indexPath.row%fieldWidth)
         let panelStatus = arrayPanels[x][y]
         cell.updateColor(panelStatus)
-        
+    
         return cell
     }
     
@@ -81,6 +81,10 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
                 turnStatus = nextTurnStatus(.white)
+                let cpuPoint = randCPU(.white)
+                put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
+                turnStatus = nextTurnStatus(.black)
+                
             }
         case .white:
             if isPuttable(.white, x: x, y: y) {
@@ -243,6 +247,22 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return currentTurn(status)
         }
         return isNot(currentTurn(status))
+    }
+    
+    func randCPU(_ status: PanelStatus) -> CGPoint {
+    
+        var arrayPuttablePt: [CGPoint] = []
+        for x in 0..<fieldWidth {
+        for y in 0..<fieldWidth {
+            if isPuttable(status, x: x, y: y) {
+               let point = CGPoint(x: x, y: y)
+                arrayPuttablePt.append(point)
+            }
+        }
+        }
+        arrayPuttablePt.shuffle()
+    
+        return arrayPuttablePt.first!
     }
     
     
