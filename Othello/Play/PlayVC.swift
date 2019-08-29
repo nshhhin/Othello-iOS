@@ -68,11 +68,15 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch turnStatus {
         case .black:
-            arrayPanels[Int(indexPath.row/fieldWidth)][indexPath.row%fieldWidth] = .black
-            turnStatus = .white
+            if isPuttable(.black, indexPath) {
+                put(.black, indexPath)
+                turnStatus = .white
+            }
         case .white:
-            arrayPanels[Int(indexPath.row/fieldWidth)][indexPath.row%fieldWidth] = .white
-            turnStatus = .black
+            if isPuttable(.white, indexPath) {
+                put(.white, indexPath)
+                turnStatus = .black
+            }
         }
         filedCollectionV.reloadData()
         updateUI()
@@ -87,6 +91,40 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             displayTurnV.backgroundColor = .white
             displayTurnLabel.textColor = .black
         }
+    }
+    
+    func isNot(_ status:PanelStatus) -> PanelStatus {
+        switch status {
+        case .black:
+            return .white
+        case .white:
+            return .black
+        case .none:
+            return .none
+        }
+    }
+    
+    func isPuttable(_ putPanelStatus:PanelStatus, _ indexPath: IndexPath) -> Bool {
+        
+        // もう置いてあったら置けない
+        if arrayPanels[Int(indexPath.row/fieldWidth)][(indexPath.row%fieldWidth)] != .none {
+            return false
+        }
+       
+        // 周辺の状況をしらべる
+        var isRoundExist = false
+        for dx in -1..<2 {
+        for dy in -1..<2 {
+            if arrayPanels[Int(indexPath.row/fieldWidth)+dx][(indexPath.row%fieldWidth)+dy] == isNot(putPanelStatus) {
+                isRoundExist = isRoundExist || true
+            }
+        }
+        }
+        return isRoundExist
+    }
+    
+    func put(_ putPanelStatus:PanelStatus, _ indexPath: IndexPath){
+        arrayPanels[Int(indexPath.row/fieldWidth)][indexPath.row%fieldWidth] = putPanelStatus
     }
     
 }
