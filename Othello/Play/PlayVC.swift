@@ -93,7 +93,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func isNot(_ status:PanelStatus) -> PanelStatus {
+    func isNot(_ status: PanelStatus) -> PanelStatus {
         switch status {
         case .black:
             return .white
@@ -101,6 +101,15 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return .black
         case .none:
             return .none
+        }
+    }
+    
+    func currentPanel(_ status: TurnStatus) -> PanelStatus {
+        switch status {
+        case .black:
+            return .black
+        case .white:
+            return .white
         }
     }
     
@@ -115,16 +124,35 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         var isRoundExist = false
         for dx in -1..<2 {
         for dy in -1..<2 {
-            if arrayPanels[Int(indexPath.row/fieldWidth)+dx][(indexPath.row%fieldWidth)+dy] == isNot(putPanelStatus) {
-                isRoundExist = isRoundExist || true
+            if dx == 0 && dy == 0 {
+               continue
+            }
+            
+            print( dy, dx )
+            let x = Int(indexPath.row/fieldWidth)
+            let y = (indexPath.row%fieldWidth)
+            if arrayPanels[x+dx][y+dy] == isNot(putPanelStatus) {
+                isRoundExist = searchNeighbor(x: x, y: y, dx: dx, dy: dy) || isRoundExist
             }
         }
         }
         return isRoundExist
     }
     
+    func searchNeighbor(x: Int, y:Int, dx: Int, dy: Int) -> Bool {
+        if arrayPanels[x+dx][y+dy] == currentPanel(turnStatus) {
+            return true
+        } else if arrayPanels[x+dx][y+dy] == .none {
+            return false
+        } else {
+            return searchNeighbor(x: x+dx, y: y+dy, dx: dx, dy: dy)
+        }
+    }
+    
     func put(_ putPanelStatus:PanelStatus, _ indexPath: IndexPath){
-        arrayPanels[Int(indexPath.row/fieldWidth)][indexPath.row%fieldWidth] = putPanelStatus
+        let x = Int(indexPath.row/fieldWidth)
+        let y = indexPath.row%fieldWidth
+        arrayPanels[x][y] = putPanelStatus
     }
     
 }
