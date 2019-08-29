@@ -48,12 +48,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FieldCell", for: indexPath) as! FieldCell
-        print( )
-        if arrayPanels[0][0] != nil {
-            let panelStatus = arrayPanels[Int(indexPath.row/fieldWidth)][indexPath.row%fieldWidth]
-            cell.updateColor(panelStatus)
-        }
-       
+        let x = Int(indexPath.row/fieldWidth)
+        let y = (indexPath.row%fieldWidth)
+        let panelStatus = arrayPanels[x][y]
+        cell.updateColor(panelStatus)
+        
         return cell
     }
     
@@ -69,12 +68,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         switch turnStatus {
         case .black:
             if isPuttable(.black, indexPath) {
-                put(.black, indexPath)
+                put(.black, x: Int(indexPath.row/fieldWidth), y: indexPath.row%fieldWidth)
                 turnStatus = .white
             }
         case .white:
             if isPuttable(.white, indexPath) {
-                put(.white, indexPath)
+                put(.white, x: Int(indexPath.row/fieldWidth), y: indexPath.row%fieldWidth)
                 turnStatus = .black
             }
         }
@@ -149,10 +148,33 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func put(_ putPanelStatus:PanelStatus, _ indexPath: IndexPath){
-        let x = Int(indexPath.row/fieldWidth)
-        let y = indexPath.row%fieldWidth
+    func put(_ putPanelStatus:PanelStatus, x: Int, y: Int){
+        
         arrayPanels[x][y] = putPanelStatus
+        
+         var isRoundExist = false
+
+        for dx in -1..<2 {
+        for dy in -1..<2 {
+            if dx == 0 && dy == 0 {
+                continue
+            }
+            // 各方向が何個ひっくり返せるかを数える
+            let t = reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
+            for i in 0..<t+1 {
+                arrayPanels[x+dx*i][y+dy*i] = currentPanel(turnStatus)
+            }
+        }}
+    }
+    
+    func reverseCount(x: Int, y: Int, dx: Int, dy: Int, count: Int) -> Int {
+        if arrayPanels[x+dx][y+dy] == currentPanel(turnStatus) {
+            return count
+        } else if arrayPanels[x+dx][y+dy] == .none {
+            return 0
+        } else {
+            return reverseCount(x: x+dx, y: y+dy, dx: dx, dy: dy, count: count+1)
+        }
     }
     
 }
