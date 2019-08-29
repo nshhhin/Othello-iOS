@@ -80,12 +80,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         case .black:
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
-                turnStatus = .white
+                turnStatus = currentTurn(checkPutPlace(.white))
             }
         case .white:
             if isPuttable(.white, x: x, y: y) {
                 put(.white, x: x, y: y)
-                turnStatus = .black
+                turnStatus = currentTurn(checkPutPlace(.black))
             }
         }
         filedCollectionV.reloadData()
@@ -141,6 +141,17 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    func currentTurn(_ status: PanelStatus) -> TurnStatus {
+        switch status {
+        case .black:
+            return .black
+        case .white:
+            return .white
+        case .none:
+            return .black
+        }
+    }
+    
     func currentPanel(_ status: TurnStatus) -> PanelStatus {
         switch status {
         case .black:
@@ -178,8 +189,6 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
         arrayPanels[x][y] = putPanelStatus
         
-         var isRoundExist = false
-
         for dx in -1..<2 {
         for dy in -1..<2 {
             if dx == 0 && dy == 0 {
@@ -212,6 +221,19 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             return reverseCount(x: x+dx, y: y+dy, dx: dx, dy: dy, count: count+1)
         }
+    }
+    
+    func checkPutPlace(_ status: PanelStatus) -> PanelStatus {
+        var existPutPlace = false
+        for x in 0..<fieldWidth {
+            for y in 0..<fieldWidth {
+                existPutPlace = isPuttable(status, x: x, y: y) || existPutPlace
+            }
+        }
+        if existPutPlace {
+            return status
+        }
+        return isNot(status)
     }
 }
 
