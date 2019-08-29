@@ -103,6 +103,26 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             displayTurnLabel.textColor = .black
         }
         
+        var blackCount = 0
+        var whiteCount = 0
+        
+        for i in 0..<fieldWidth {
+        for j in 0..<fieldWidth {
+            let panel = arrayPanels[i][j]
+            switch panel {
+            case .black:
+                blackCount+=1
+            case .white:
+                whiteCount+=1
+            case .none:
+                break
+            }
+        }}
+        
+        blackCountLabel.text = String(blackCount)
+        whiteCountLabel.text = String(whiteCount)
+       
+        
 //        switch player1 {
 //        case .player:
 //            displayTurnLabel.text = "Player1のターン"

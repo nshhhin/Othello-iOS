@@ -172,7 +172,7 @@
                         <outlet property="displayTurnLabel" destination="Ac7-5K-ZfP" id="74u-Ku-u23"/>
                         <outlet property="displayTurnV" destination="VY8-RU-s8v" id="fhJ-rw-1zh"/>
                         <outlet property="filedCollectionV" destination="tJj-3W-3IG" id="j0Z-pX-Z6G"/>
-                        <outlet property="whiteCountLabel" destination="Nfb-3m-rhY" id="dL2-iO-JHE"/>
+                        <outlet property="whiteCountLabel" destination="CKK-UR-bU9" id="SBP-4M-oty"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCf-9v-B1c" userLabel="First Responder" sceneMemberID="firstResponder"/>
