@@ -150,7 +150,7 @@
                     <connections>
                         <outlet property="blackCountLabel" destination="ykk-Y5-z2X" id="vJY-IF-afe"/>
                         <outlet property="blackV" destination="rRQ-cX-MMO" id="DZ1-nJ-DMn"/>
-                        <outlet property="filedCollectionV" destination="tJj-3W-3IG" id="j0Z-pX-Z6G"/>
+                        <outlet property="fieldCollectionV" destination="tJj-3W-3IG" id="gcC-gI-ADh"/>
                         <outlet property="whiteCountLabel" destination="CKK-UR-bU9" id="SBP-4M-oty"/>
                         <outlet property="whiteV" destination="Xp5-CB-NcA" id="jTs-z7-BhD"/>
                     </connections>
@@ -158,6 +158,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCf-9v-B1c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="192.75362318840581" y="-1.3392857142857142"/>
+        </scene>
+        <!--WinnerVC-->
+        <scene sceneID="uxu-Kh-kmQ">
+            <objects>
+                <viewController storyboardIdentifier="WinnerVC" modalPresentationStyle="overCurrentContext" id="cTr-cE-oGJ" customClass="WinnerVC" customModule="Othello" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pBi-1D-8Cr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIF-Rc-u6g">
+                                <rect key="frame" x="30" y="345" width="354" height="206"/>
+                                <color key="backgroundColor" red="1" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="qIF-Rc-u6g" secondAttribute="height" multiplier="177:103" id="lA3-9e-Lhn"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="さんの勝利です" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIT-st-efu">
+                                <rect key="frame" x="107.5" y="431" width="199" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.39948095034246578" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="qIF-Rc-u6g" firstAttribute="centerX" secondItem="pBi-1D-8Cr" secondAttribute="centerX" id="8Hi-YC-po8"/>
+                            <constraint firstItem="uIT-st-efu" firstAttribute="centerY" secondItem="pBi-1D-8Cr" secondAttribute="centerY" id="A8L-qX-1jd"/>
+                            <constraint firstItem="qIF-Rc-u6g" firstAttribute="centerY" secondItem="pBi-1D-8Cr" secondAttribute="centerY" id="Oaf-Is-Op3"/>
+                            <constraint firstItem="uIT-st-efu" firstAttribute="centerX" secondItem="pBi-1D-8Cr" secondAttribute="centerX" id="OiC-b4-7HL"/>
+                            <constraint firstItem="qIF-Rc-u6g" firstAttribute="leading" secondItem="Y0e-aU-hm3" secondAttribute="leading" constant="30" id="nvF-5D-geQ"/>
+                            <constraint firstItem="Y0e-aU-hm3" firstAttribute="trailing" secondItem="qIF-Rc-u6g" secondAttribute="trailing" constant="30" id="zuQ-3A-wqp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Y0e-aU-hm3"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q5f-ng-on9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="853.62318840579712" y="-1.3392857142857142"/>
         </scene>
     </scenes>
 </document>

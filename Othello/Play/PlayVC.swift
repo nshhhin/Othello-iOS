@@ -15,12 +15,14 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     @IBOutlet weak var blackV: UIView!
     @IBOutlet weak var whiteV: UIView!
+    @IBOutlet var winnerV: UIView!
     
-    @IBOutlet weak var filedCollectionV: UICollectionView! {
+    
+    @IBOutlet weak var fieldCollectionV: UICollectionView! {
         didSet {
-            filedCollectionV.delegate = self
-            filedCollectionV.dataSource = self
-            filedCollectionV.register(
+            fieldCollectionV.delegate = self
+            fieldCollectionV.dataSource = self
+            fieldCollectionV.register(
                 UINib(nibName: "FieldCell", bundle: nil),
                 forCellWithReuseIdentifier: "FieldCell")
         }
@@ -44,6 +46,28 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         arrayPanels[4][4] = .white
         
         updateUI()
+        
+//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.cpuPut), userInfo: nil, repeats: true)
+        
+    }
+    
+    @objc func cpuPut(){
+        if player1 == .cpu {
+            let cpuPoint = randCPU(.black)
+            put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
+            turnStatus = nextTurnStatus(.white)
+            if player2 == .cpu {
+                let cpuPoint2 = randCPU(.black)
+                put(.white, x: Int(cpuPoint2.x), y: Int(cpuPoint2.y))
+                turnStatus = nextTurnStatus(.white)
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.updateUI()
+            self.fieldCollectionV.reloadData()
+        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,9 +105,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
                 turnStatus = nextTurnStatus(.white)
-                let cpuPoint = randCPU(.white)
-                put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
-                turnStatus = nextTurnStatus(.black)
+                
+//                if player2 == .cpu {
+//                    let cpuPoint = randCPU(.white)
+//                    put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
+//                    turnStatus = nextTurnStatus(.black)
+//                }
                 
             }
         case .white:
@@ -92,7 +119,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 turnStatus = nextTurnStatus(.black)
             }
         }
-        filedCollectionV.reloadData()
+        fieldCollectionV.reloadData()
         updateUI()
     }
     
@@ -265,6 +292,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         return arrayPuttablePt.first!
     }
     
-    
+    func popupWinnerV(){
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "WinnerVC")
+        nextVC.modalTransitionStyle = .crossDissolve
+        present(nextVC, animated: true, completion: nil)
+    }
 }
 

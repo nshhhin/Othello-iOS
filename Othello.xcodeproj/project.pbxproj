@@ -21,6 +21,7 @@
 		F32FCF12231766C800DC4FF6 /* PanelStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32FCF11231766C800DC4FF6 /* PanelStatus.swift */; };
 		F32FCF1623176F1000DC4FF6 /* TurnStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32FCF1523176F1000DC4FF6 /* TurnStatus.swift */; };
 		F3CAE8D92317A27500DA730D /* PlayerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CAE8D82317A27500DA730D /* PlayerStatus.swift */; };
+		F3CAE8DB23180AC200DA730D /* WinnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CAE8DA23180AC200DA730D /* WinnerVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		F32FCF11231766C800DC4FF6 /* PanelStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelStatus.swift; sourceTree = "<group>"; };
 		F32FCF1523176F1000DC4FF6 /* TurnStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnStatus.swift; sourceTree = "<group>"; };
 		F3CAE8D82317A27500DA730D /* PlayerStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatus.swift; sourceTree = "<group>"; };
+		F3CAE8DA23180AC200DA730D /* WinnerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinnerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				F32FCF0B2316F57300DC4FF6 /* PlayVC.swift */,
+				F3CAE8DA23180AC200DA730D /* WinnerVC.swift */,
 				F32FCF0F2317610D00DC4FF6 /* FieldCell.swift */,
 				F32FCF1523176F1000DC4FF6 /* TurnStatus.swift */,
 				F32FCF11231766C800DC4FF6 /* PanelStatus.swift */,
@@ -300,6 +303,7 @@
 				F32FCF102317610D00DC4FF6 /* FieldCell.swift in Sources */,
 				F32FCEDA2316F25200DC4FF6 /* AppDelegate.swift in Sources */,
 				F32FCF0C2316F57300DC4FF6 /* PlayVC.swift in Sources */,
+				F3CAE8DB23180AC200DA730D /* WinnerVC.swift in Sources */,
 				F32FCF1623176F1000DC4FF6 /* TurnStatus.swift in Sources */,
 				F32FCF12231766C800DC4FF6 /* PanelStatus.swift in Sources */,
 			);
