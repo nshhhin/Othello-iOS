@@ -136,6 +136,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             }
             
             
+            
             print( dy, dx )
             let x = Int(indexPath.row/fieldWidth)
             let y = (indexPath.row%fieldWidth)
@@ -148,6 +149,11 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func searchNeighbor(x: Int, y:Int, dx: Int, dy: Int) -> Bool {
+        let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
+        if isOverField {
+            return false
+        }
+        
         if arrayPanels[x+dx][y+dy] == currentPanel(turnStatus) {
             return true
         } else if arrayPanels[x+dx][y+dy] == .none {
