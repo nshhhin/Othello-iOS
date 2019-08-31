@@ -1,7 +1,7 @@
 
 import UIKit
 
-class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class PlayVC: UIViewController {
     
     // オセロの盤の状態を格納する二重配列
     var arrayPanels: [[PanelStatus]] = []
@@ -39,71 +39,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
          // フィールドを初期化
         setupField()
-        
         updateUI()
-        
-//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.cpuPut), userInfo: nil, repeats: true)
-        
     }
-    
-    func setupField(){
-        for i in 0..<fieldWidth {
-            var rowPanels: [PanelStatus] = []
-            for j in 0..<fieldWidth {
-                rowPanels.append(.none)
-            }
-            arrayPanels.append( rowPanels )
-        }
-        
-        arrayPanels[3][3] = .white
-        arrayPanels[3][4] = .black
-        arrayPanels[4][3] = .black
-        arrayPanels[4][4] = .white
-    }
-    
-    @objc func cpuPut(){
-        if player1 == .cpu {
-            let cpuPoint = randCPU(.black)
-            put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
-            turnStatus = nextTurnStatus(.white)
-            if player2 == .cpu {
-                let cpuPoint2 = randCPU(.black)
-                put(.white, x: Int(cpuPoint2.x), y: Int(cpuPoint2.y))
-                turnStatus = nextTurnStatus(.white)
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.updateUI()
-            self.fieldCollectionV.reloadData()
-        }
+}
 
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fieldWidth * fieldWidth
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FieldCell", for: indexPath) as! FieldCell
-        let x = Int(indexPath.row/fieldWidth)
-        let y = (indexPath.row%fieldWidth)
-        let panelStatus = arrayPanels[x][y]
-        cell.updateColor(panelStatus)
-    
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellSize:CGFloat = (self.view.bounds.width - CGFloat(margin) * (CGFloat(fieldWidth) - 1.0) )/CGFloat(fieldWidth)
-        return CGSize(width: cellSize, height: cellSize)
-    }
+
+extension PlayVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let x = Int(indexPath.row/fieldWidth)
@@ -138,10 +79,74 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         fieldCollectionV.reloadData()
         updateUI()
     }
+}
+
+extension PlayVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return fieldWidth * fieldWidth
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FieldCell", for: indexPath) as! FieldCell
+        let x = Int(indexPath.row/fieldWidth)
+        let y = (indexPath.row%fieldWidth)
+        let panelStatus = arrayPanels[x][y]
+        cell.updateColor(panelStatus)
+        
+        return cell
+    }
+}
+
+extension PlayVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellSize:CGFloat = (self.view.bounds.width - CGFloat(margin) * (CGFloat(fieldWidth) - 1.0) )/CGFloat(fieldWidth)
+        return CGSize(width: cellSize, height: cellSize)
+    }
+}
+
+extension PlayVC {
+    func setupField(){
+        for i in 0..<fieldWidth {
+            var rowPanels: [PanelStatus] = []
+            for j in 0..<fieldWidth {
+                rowPanels.append(.none)
+            }
+            arrayPanels.append( rowPanels )
+        }
+        
+        arrayPanels[3][3] = .white
+        arrayPanels[3][4] = .black
+        arrayPanels[4][3] = .black
+        arrayPanels[4][4] = .white
+    }
+    
+    @objc func cpuPut(){
+        if player1 == .cpu {
+            let cpuPoint = randCPU(.black)
+            put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
+            turnStatus = nextTurnStatus(.white)
+            if player2 == .cpu {
+                let cpuPoint2 = randCPU(.black)
+                put(.white, x: Int(cpuPoint2.x), y: Int(cpuPoint2.y))
+                turnStatus = nextTurnStatus(.white)
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.updateUI()
+            self.fieldCollectionV.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     
     func updateUI(){
         switch turnStatus {
-            // 自分のターンの時, 得点表の点滅させる
+        // 自分のターンの時, 得点表の点滅させる
         case .black:
             blackV.alpha = 1
             UIView.animate(withDuration: 0.5, delay: 0.1, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
@@ -162,17 +167,17 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         var whiteCount = 0
         
         for i in 0..<fieldWidth {
-        for j in 0..<fieldWidth {
-            let panel = arrayPanels[i][j]
-            switch panel {
-            case .black:
-                blackCount+=1
-            case .white:
-                whiteCount+=1
-            case .none:
-                break
-            }
-        }}
+            for j in 0..<fieldWidth {
+                let panel = arrayPanels[i][j]
+                switch panel {
+                case .black:
+                    blackCount+=1
+                case .white:
+                    whiteCount+=1
+                case .none:
+                    break
+                }
+            }}
         
         blackCountLabel.text = String(blackCount)
         whiteCountLabel.text = String(whiteCount)
@@ -219,7 +224,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func isPuttable(_ putPanelStatus:PanelStatus, x: Int, y: Int) -> Bool {
-    
+        
         // もう置いてあったら置けない
         if arrayPanels[x][y] != .none {
             return false
@@ -227,12 +232,12 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         // 周辺の状況をしらべる
         var revSumCount = 0
         for dx in -1..<2 {
-        for dy in -1..<2 {
-            if dx == 0 && dy == 0 {
-               continue
+            for dy in -1..<2 {
+                if dx == 0 && dy == 0 {
+                    continue
+                }
+                revSumCount += reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
             }
-            revSumCount += reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
-        }
         }
         
         if revSumCount > 0 {
@@ -247,21 +252,21 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         arrayPanels[x][y] = putPanelStatus
         
         for dx in -1..<2 {
-        for dy in -1..<2 {
-            if dx == 0 && dy == 0 {
-                continue
-            }
-            let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
-            if isOverField {
-                continue
-            }
-            
-            // 各方向が何個ひっくり返せるかを数える
-            let t = reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
-            for i in 0..<t+1 {
-                arrayPanels[x+dx*i][y+dy*i] = currentPanel(turnStatus)
-            }
-        }}
+            for dy in -1..<2 {
+                if dx == 0 && dy == 0 {
+                    continue
+                }
+                let isOverField = x + dx < 0 || y + dy < 0 || x + dx >= fieldWidth || y + dy >= fieldWidth
+                if isOverField {
+                    continue
+                }
+                
+                // 各方向が何個ひっくり返せるかを数える
+                let t = reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
+                for i in 0..<t+1 {
+                    arrayPanels[x+dx*i][y+dy*i] = currentPanel(turnStatus)
+                }
+            }}
     }
     
     // 何個返せるかを取得
@@ -308,18 +313,18 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func randCPU(_ status: PanelStatus) -> CGPoint {
-    
+        
         var arrayPuttablePt: [CGPoint] = []
         for x in 0..<fieldWidth {
-        for y in 0..<fieldWidth {
-            if isPuttable(status, x: x, y: y) {
-               let point = CGPoint(x: x, y: y)
-                arrayPuttablePt.append(point)
+            for y in 0..<fieldWidth {
+                if isPuttable(status, x: x, y: y) {
+                    let point = CGPoint(x: x, y: y)
+                    arrayPuttablePt.append(point)
+                }
             }
         }
-        }
         arrayPuttablePt.shuffle()
-    
+        
         return arrayPuttablePt.first!
     }
     
@@ -336,4 +341,3 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         updateUI()
     }
 }
-
