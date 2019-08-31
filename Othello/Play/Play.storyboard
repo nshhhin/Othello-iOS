@@ -131,19 +131,33 @@
                                     <constraint firstAttribute="height" constant="50" id="fdB-dl-f7i"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JwK-aw-B5f">
+                                <rect key="frame" x="50" y="815" width="314" height="48"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="パス"/>
+                                <connections>
+                                    <action selector="tapPass:" destination="ieH-Zv-3ht" eventType="touchUpInside" id="nIY-a0-eph"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Xp5-CB-NcA" firstAttribute="leading" secondItem="Zfr-77-pcc" secondAttribute="leading" constant="20" id="3We-bj-TFQ"/>
+                            <constraint firstItem="JwK-aw-B5f" firstAttribute="top" secondItem="Xp5-CB-NcA" secondAttribute="bottom" constant="20" id="D2w-c7-nmK"/>
                             <constraint firstItem="rRQ-cX-MMO" firstAttribute="top" secondItem="tJj-3W-3IG" secondAttribute="bottom" constant="20" id="Fnv-NY-H9O"/>
                             <constraint firstItem="Zfr-77-pcc" firstAttribute="trailing" secondItem="rRQ-cX-MMO" secondAttribute="trailing" constant="20" id="JTU-q2-upB"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="centerY" secondItem="hoL-fI-9XH" secondAttribute="centerY" id="Jph-18-JTX"/>
                             <constraint firstItem="Xp5-CB-NcA" firstAttribute="top" secondItem="rRQ-cX-MMO" secondAttribute="bottom" constant="20" id="RRN-cf-UGp"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="centerX" secondItem="hoL-fI-9XH" secondAttribute="centerX" id="SPn-0Y-REK"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="trailing" secondItem="Zfr-77-pcc" secondAttribute="trailing" id="UYY-b4-y9a"/>
+                            <constraint firstItem="JwK-aw-B5f" firstAttribute="centerX" secondItem="hoL-fI-9XH" secondAttribute="centerX" id="ZEe-wq-qjS"/>
                             <constraint firstItem="rRQ-cX-MMO" firstAttribute="leading" secondItem="Zfr-77-pcc" secondAttribute="leading" constant="20" id="fyG-7c-4SB"/>
                             <constraint firstItem="Zfr-77-pcc" firstAttribute="trailing" secondItem="Xp5-CB-NcA" secondAttribute="trailing" constant="20" id="jnU-Zs-8bi"/>
+                            <constraint firstItem="JwK-aw-B5f" firstAttribute="leading" secondItem="Zfr-77-pcc" secondAttribute="leading" constant="50" id="kWG-Qe-j7S"/>
                             <constraint firstItem="tJj-3W-3IG" firstAttribute="leading" secondItem="hoL-fI-9XH" secondAttribute="leading" id="nSY-1w-WWU"/>
+                            <constraint firstItem="Zfr-77-pcc" firstAttribute="trailing" secondItem="JwK-aw-B5f" secondAttribute="trailing" constant="50" id="o4Q-ne-X1l"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zfr-77-pcc"/>
                     </view>
@@ -192,6 +206,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Y0e-aU-hm3"/>
                     </view>
+                    <connections>
+                        <outlet property="textLabel" destination="uIT-st-efu" id="WaN-fo-OBI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q5f-ng-on9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

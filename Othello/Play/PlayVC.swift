@@ -3,20 +3,26 @@ import UIKit
 
 class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    // オセロの盤の状態を格納する二重配列
     var arrayPanels: [[PanelStatus]] = []
+    
+    // 現在どっちのターンか
     var turnStatus: TurnStatus = .black
+    
+    // プレイヤーが .cpu か .player か
     var player1: PlayerStatus = .player
     var player2: PlayerStatus = .player
+    
+    // 盤面の幅とマージン
     let fieldWidth = 8
     let margin = 1.0
     
+    // UI部分
     @IBOutlet weak var blackCountLabel: UILabel!
     @IBOutlet weak var whiteCountLabel: UILabel!
-    
     @IBOutlet weak var blackV: UIView!
     @IBOutlet weak var whiteV: UIView!
     @IBOutlet var winnerV: UIView!
-    
     
     @IBOutlet weak var fieldCollectionV: UICollectionView! {
         didSet {
@@ -31,7 +37,16 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // フィールドを初期化
+         // フィールドを初期化
+        setupField()
+        
+        updateUI()
+        
+//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.cpuPut), userInfo: nil, repeats: true)
+        
+    }
+    
+    func setupField(){
         for i in 0..<fieldWidth {
             var rowPanels: [PanelStatus] = []
             for j in 0..<fieldWidth {
@@ -44,11 +59,6 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         arrayPanels[3][4] = .black
         arrayPanels[4][3] = .black
         arrayPanels[4][4] = .white
-        
-        updateUI()
-        
-//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.cpuPut), userInfo: nil, repeats: true)
-        
     }
     
     @objc func cpuPut(){
@@ -91,7 +101,6 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //　横幅を画面サイズの約半分にする
         let cellSize:CGFloat = (self.view.bounds.width - CGFloat(margin) * (CGFloat(fieldWidth) - 1.0) )/CGFloat(fieldWidth)
         return CGSize(width: cellSize, height: cellSize)
     }
@@ -104,19 +113,24 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         case .black:
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
-                turnStatus = nextTurnStatus(.white)
-                
-//                if player2 == .cpu {
-//                    let cpuPoint = randCPU(.white)
-//                    put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
-//                    turnStatus = nextTurnStatus(.black)
-//                }
-                
+//                turnStatus = nextTurnStatus(.white)
+                if isExistPutPlace(status: .white) {
+                    turnStatus = .white
+                } else {
+                    turnStatus = .black
+                }
+                break
             }
         case .white:
             if isPuttable(.white, x: x, y: y) {
                 put(.white, x: x, y: y)
-                turnStatus = nextTurnStatus(.black)
+//                turnStatus = nextTurnStatus(.black)
+                if isExistPutPlace(status: .black) {
+                    turnStatus = .black
+                } else {
+                    turnStatus = .white
+                }
+                break
             }
         }
         fieldCollectionV.reloadData()
@@ -125,6 +139,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func updateUI(){
         switch turnStatus {
+            // 自分のターンの時, 得点表の点滅させる
         case .black:
             blackV.alpha = 1
             UIView.animate(withDuration: 0.5, delay: 0.1, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
@@ -276,6 +291,20 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         return isNot(currentTurn(status))
     }
     
+    func isExistPutPlace(status: TurnStatus) -> Bool {
+        var panelStatus = currentPanel(status)
+        var existPutPlace = false
+        for x in 0..<fieldWidth {
+            for y in 0..<fieldWidth {
+                existPutPlace = isPuttable(panelStatus, x: x, y: y) || existPutPlace
+            }
+        }
+        if existPutPlace {
+            return true
+        }
+        return false
+    }
+    
     func randCPU(_ status: PanelStatus) -> CGPoint {
     
         var arrayPuttablePt: [CGPoint] = []
@@ -294,9 +323,15 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func popupWinnerV(){
         let storyboard: UIStoryboard = self.storyboard!
-        let nextVC = storyboard.instantiateViewController(withIdentifier: "WinnerVC")
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "WinnerVC") as! WinnerVC
         nextVC.modalTransitionStyle = .crossDissolve
+        nextVC.textLabel.text = "あが勝ちました"
         present(nextVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func tapPass(_ sender: Any) {
+        turnStatus = isNot(turnStatus)
+        updateUI()
     }
 }
 
