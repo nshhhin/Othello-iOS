@@ -113,7 +113,8 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         case .black:
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
-//                turnStatus = nextTurnStatus(.white)
+                
+                // 白が置ければ通常通り白のターンにする。なければまた黒のターン。
                 if isExistPutPlace(status: .white) {
                     turnStatus = .white
                 } else {
@@ -124,7 +125,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         case .white:
             if isPuttable(.white, x: x, y: y) {
                 put(.white, x: x, y: y)
-//                turnStatus = nextTurnStatus(.black)
+                
                 if isExistPutPlace(status: .black) {
                     turnStatus = .black
                 } else {
@@ -133,6 +134,7 @@ class PlayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 break
             }
         }
+        
         fieldCollectionV.reloadData()
         updateUI()
     }
