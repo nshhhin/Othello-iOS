@@ -39,7 +39,7 @@ class PlayVC: UIViewController {
         
          // フィールドを初期化
         setupField()
-//        終了条件パターン()
+        // 終了条件パターン()
         updateUI()
     }
     
@@ -67,9 +67,6 @@ extension PlayVC: UICollectionViewDelegate {
                 put(.black, x: x, y: y)
                 turnStatus = .white
                 
-                if isFinished() {
-                    finishGame()
-                }
                 // 白が置ければ通常通り白のターンにする。なければまた黒のターン。
 //                if isExistPutPlace(status: .white) {
 //                    turnStatus = .white
@@ -82,10 +79,6 @@ extension PlayVC: UICollectionViewDelegate {
             if isPuttable(.white, x: x, y: y) {
                 put(.white, x: x, y: y)
                 turnStatus = .black
-                
-                if isFinished() {
-                    finishGame()
-                }
                 
 //                if isExistPutPlace(status: .black) {
 //                    turnStatus = .black
@@ -101,6 +94,11 @@ extension PlayVC: UICollectionViewDelegate {
         
         // 点数表記などを更新
         updateUI()
+        
+        // 終了判定
+        if isFinished() {
+            finishGame()
+        }
     }
 }
 
