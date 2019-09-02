@@ -39,11 +39,18 @@ class PlayVC: UIViewController {
         
          // フィールドを初期化
         setupField()
+//        終了条件パターン()
         updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    
+    @IBAction func tapPass(_ sender: Any) {
+        turnStatus = isNot(turnStatus)
+        updateUI()
     }
 }
 
@@ -58,29 +65,41 @@ extension PlayVC: UICollectionViewDelegate {
         case .black:
             if isPuttable(.black, x: x, y: y) {
                 put(.black, x: x, y: y)
+                turnStatus = .white
                 
-                // 白が置ければ通常通り白のターンにする。なければまた黒のターン。
-                if isExistPutPlace(status: .white) {
-                    turnStatus = .white
-                } else {
-                    turnStatus = .black
+                if isFinished() {
+                    finishGame()
                 }
+                // 白が置ければ通常通り白のターンにする。なければまた黒のターン。
+//                if isExistPutPlace(status: .white) {
+//                    turnStatus = .white
+//                } else {
+//                    turnStatus = .black
+//                }
                 break
             }
         case .white:
             if isPuttable(.white, x: x, y: y) {
                 put(.white, x: x, y: y)
+                turnStatus = .black
                 
-                if isExistPutPlace(status: .black) {
-                    turnStatus = .black
-                } else {
-                    turnStatus = .white
+                if isFinished() {
+                    finishGame()
                 }
+                
+//                if isExistPutPlace(status: .black) {
+//                    turnStatus = .black
+//                } else {
+//                    turnStatus = .white
+//                }
                 break
             }
         }
         
+        // 盤の情報を更新
         fieldCollectionV.reloadData()
+        
+        // 点数表記などを更新
         updateUI()
     }
 }
@@ -124,24 +143,6 @@ extension PlayVC {
         arrayPanels[3][4] = .black
         arrayPanels[4][3] = .black
         arrayPanels[4][4] = .white
-    }
-    
-    @objc func cpuPut(){
-        if player1 == .cpu {
-            let cpuPoint = randCPU(.black)
-            put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
-            turnStatus = nextTurnStatus(.white)
-            if player2 == .cpu {
-                let cpuPoint2 = randCPU(.black)
-                put(.white, x: Int(cpuPoint2.x), y: Int(cpuPoint2.y))
-                turnStatus = nextTurnStatus(.white)
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.updateUI()
-            self.fieldCollectionV.reloadData()
-        }
     }
     
     func updateUI(){
@@ -328,16 +329,100 @@ extension PlayVC {
         return arrayPuttablePt.first!
     }
     
-    func popupWinnerV(){
+    func finishGame(){
+        
+        // どっちが勝ちかを判定する
+        var winner: PanelStatus = .none
+        var blackCount = countPanel(status: .black)
+        var whiteCount = countPanel(status: .white)
+        if blackCount > whiteCount {
+            winner = .black
+        }
+        else if whiteCount > blackCount {
+            winner = .white
+        }
+        else {
+            winner = .none
+        }
+        
         let storyboard: UIStoryboard = self.storyboard!
         let nextVC = storyboard.instantiateViewController(withIdentifier: "WinnerVC") as! WinnerVC
         nextVC.modalTransitionStyle = .crossDissolve
-        nextVC.textLabel.text = "あが勝ちました"
+        nextVC.winner = winner
         present(nextVC, animated: true, completion: nil)
     }
     
-    @IBAction func tapPass(_ sender: Any) {
-        turnStatus = isNot(turnStatus)
-        updateUI()
+    @objc func cpuPut(){
+        if player1 == .cpu {
+            let cpuPoint = randCPU(.black)
+            put(.white, x: Int(cpuPoint.x), y: Int(cpuPoint.y))
+            turnStatus = nextTurnStatus(.white)
+            if player2 == .cpu {
+                let cpuPoint2 = randCPU(.black)
+                put(.white, x: Int(cpuPoint2.x), y: Int(cpuPoint2.y))
+                turnStatus = nextTurnStatus(.white)
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.updateUI()
+            self.fieldCollectionV.reloadData()
+        }
+    }
+    
+    func isFinished() -> Bool {
+        
+        // 空白があるか確かめる
+        var hasEmpty = false
+        for x in 0..<fieldWidth {
+            for y in 0..<fieldWidth {
+                let isEmpty = arrayPanels[x][y] == .none
+                hasEmpty = hasEmpty || isEmpty
+            }
+        }
+        
+        // ひとつでも空白があれば終了じゃない
+        if hasEmpty {
+            return false
+        }
+        return true
+    }
+    
+    func countPanel(status: PanelStatus) -> Int {
+        var count = 0
+        for x in 0..<fieldWidth {
+            for y in 0..<fieldWidth {
+                if arrayPanels[x][y] == status {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+    
+    // 以下デバッグ用フィールド
+    func パス条件パターン(){
+        for x in 0..<fieldWidth {
+            for y in 0..<fieldWidth {
+                arrayPanels[x][y] = .white
+            }
+            
+            arrayPanels[0][0] = .none
+        }
+        
+        fieldCollectionV.reloadData()
+    }
+    
+    func 終了条件パターン(){
+        for x in 0..<fieldWidth {
+            for y in 0..<fieldWidth {
+                arrayPanels[x][y] = .white
+            }
+            
+            arrayPanels[0][0] = .none
+            arrayPanels[3][3] = .black
+        }
+        
+        fieldCollectionV.reloadData()
     }
 }

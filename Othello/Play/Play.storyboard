@@ -185,7 +185,7 @@
                                 <rect key="frame" x="30" y="345" width="354" height="206"/>
                                 <color key="backgroundColor" red="1" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="qIF-Rc-u6g" secondAttribute="height" multiplier="177:103" id="lA3-9e-Lhn"/>
+                                    <constraint firstAttribute="width" secondItem="qIF-Rc-u6g" secondAttribute="height" multiplier="177:103" id="qkO-8K-9Fd"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="さんの勝利です" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIT-st-efu">
