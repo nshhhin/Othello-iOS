@@ -41,6 +41,10 @@ class PlayVC: UIViewController {
         setupField()
         updateUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 }
 
 
@@ -138,10 +142,6 @@ extension PlayVC {
             self.updateUI()
             self.fieldCollectionV.reloadData()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     func updateUI(){
