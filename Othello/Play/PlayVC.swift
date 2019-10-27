@@ -37,16 +37,15 @@ class PlayVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         // フィールドを初期化
+         // フィールドを初期化する
         setupField()
-        // 終了条件パターン()
+        // UIを更新する
         updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
     
     @IBAction func tapPass(_ sender: Any) {
         turnStatus = isNot(turnStatus)
@@ -73,7 +72,6 @@ extension PlayVC: UICollectionViewDelegate {
 //                } else {
 //                    turnStatus = .black
 //                }
-                break
             }
         case .white:
             if isPuttable(.white, x: x, y: y) {
@@ -85,7 +83,6 @@ extension PlayVC: UICollectionViewDelegate {
 //                } else {
 //                    turnStatus = .white
 //                }
-                break
             }
         }
         
@@ -144,22 +141,38 @@ extension PlayVC {
     }
     
     func updateUI(){
+        
         switch turnStatus {
         // 自分のターンの時, 得点表の点滅させる
         case .black:
-            blackV.alpha = 1
-            UIView.animate(withDuration: 0.5, delay: 0.1, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
-                self.blackV.alpha = 0.3
-            })
-            whiteV.alpha = 1
+            // .whiteのアニメーションを消す
+            whiteV.alpha = 1.0
             whiteV.layer.removeAllAnimations()
-        case .white:
-            whiteV.alpha = 1
-            UIView.animate(withDuration: 0.5, delay: 0.1, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
-                self.whiteV.alpha = 0.3
+            
+            // .blackにアニメーションをつける
+            blackV.alpha = 1.0
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.1,
+                options: [.curveEaseIn, .repeat, .autoreverse],
+                animations: {
+                    self.blackV.alpha = 0.3
             })
+        case .white:
+            // .blackのアニメーションを消す
+            blackV.alpha = 1.0
             blackV.layer.removeAllAnimations()
-            blackV.alpha = 1
+            
+            // .whiteにアニメーションをつける
+            whiteV.alpha = 1
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.1,
+                options: [.curveEaseIn, .repeat, .autoreverse],
+                animations: {
+                    self.whiteV.alpha = 0.3
+            })
+            
         }
         
         var blackCount = 0
@@ -235,8 +248,8 @@ extension PlayVC {
                 if dx == 0 && dy == 0 {
                     continue
                 }
-                revSumCount += reverseCount(x: x, y: y, dx: dx, dy: dy, count: 0)
-            }
+                revSumCount += reverseCount(
+                
         }
         
         if revSumCount > 0 {
